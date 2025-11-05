@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Happy Birthday Diya 🎂💖</title>
+<style>
+body {
+  margin: 0;
+  font-family: 'Poppins', sans-serif;
+  overflow: hidden;
+  background: linear-gradient(135deg, #ff9a9e, #fad0c4, #fbc2eb, #a1c4fd);
+  background-size: 400% 400%;
+  animation: gradientBG 15s ease infinite;
+  color: white;
+  text-align: center;
+}
+
+@keyframes gradientBG {
+  0%{background-position:0% 50%}
+  50%{background-position:100% 50%}
+  100%{background-position:0% 50%}
+}
+
+h1 {
+  font-size: 3em;
+  margin-top: 30px;
+  background: linear-gradient(45deg, #ff6ec7, #ff9a9e, #fbc2eb, #a1c4fd, #ff9a9e);
+  background-size: 300% 300%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: rainbowText 5s ease infinite, glow 2s ease-in-out infinite alternate;
+}
+
+@keyframes rainbowText {
+  0%{background-position:0% 50%;}
+  50%{background-position:100% 50%;}
+  100%{background-position:0% 50%;}
+}
+
+@keyframes glow {
+  from { text-shadow: 0 0 10px #ff99cc; }
+  to { text-shadow: 0 0 20px #ff3399, 0 0 30px #ff66cc; }
+}
+
+.slideshow {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.slide {
+  position: absolute;
+  width: 30%;
+  height: 100%;
+  opacity: 0;
+  transition: opacity 1.5s ease-in-out;
+}
+
+.slide img {
+  width: 80%;
+  height: 70vh;
+  object-fit: cover;
+  filter: brightness(0.8);
+}
+
+.slide.active {
+  opacity: 1;
+}
+
+#playBtn {
+  position: fixed;
+  bottom: 30px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #ff3399;
+  color: white;
+  border: none;
+  padding: 15px 30px;
+  border-radius: 30px;
+  cursor: pointer;
+  font-size: 1.2em;
+  box-shadow: 0 0 15px #ff66b2;
+}
+
+.hearts {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.heart {
+  position: absolute;
+  color: #ff66b2;
+  animation: floatUp 6s linear infinite;
+  font-size: 20px;
+}
+
+@keyframes floatUp {
+  from { transform: translateY(100vh) scale(0.5); opacity: 1; }
+  to { transform: translateY(-10vh) scale(1.5); opacity: 0; }
+}
+
+.message {
+  position: fixed;
+  bottom: 100px;
+  width: 100%;
+  text-align: center;
+  font-size: 1.5em;
+  opacity: 0;
+  animation: fadeIn 2s forwards 20s;
+}
+
+@keyframes fadeIn {
+  to { opacity: 1; }
+}
+
+.snowflake, .star, .bubble, .petal, .letter {
+  position: fixed;
+  top: -50px;
+  user-select: none;
+  pointer-events: none;
+  z-index: 9999;
+}
+
+.snowflake { color: white; font-size: 1em; }
+.star { color: #fffacd; font-size: 10px; }
+.bubble { background: rgba(255,255,255,0.7); border-radius: 50%; }
+.petal { font-size: 20px; }
+.letter { font-weight: bold; font-size: 25px; text-shadow: 1px 1px 5px #ff3cac; }
+
+#fireworksCanvas {
+  position: fixed;
+  top:0;
+  left:0;
+  width:100%;
+  height:100%;
+  pointer-events: none;
+  z-index: 1000;
+}
+
+/* Gift box button */
+.gift-btn {
+  position: fixed;
+  bottom: 100px;
+  right: 50px;
+  font-size: 2.5em;
+  cursor: pointer;
+  animation: pulse 2s infinite;
+  z-index: 2000;
+}
+@keyframes pulse {
+  0%,100%{transform:scale(1);}
+  50%{transform:scale(1.2);}
+}
+
+/* Gift modal */
+.gift-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.6s ease;
+  z-index: 3000;
+}
+
+.gift-modal.active {
+  opacity: 1;
+  visibility: visible;
+}
+
+.gift-box {
+  background: #ff66b2;
+  width: 200px;
+  height: 150px;
+  position: relative;
+  border-radius: 10px;
+  cursor: pointer;
+  box-shadow: 0 0 20px rgba(255,255,255,0.5);
+  transition: transform 1s;
+}
+
+.gift-lid {
+  position: absolute;
+  top: 0;
+  width: 100%;
+  height: 40px;
+  background: #ff3399;
+  border-radius: 10px 10px 0 0;
+  transform-origin: center bottom;
+  transition: transform 1s;
+}
+
+.gift-box.open .gift-lid {
+  transform: rotateX(160deg);
+}
+
+.gift-content {
+  display: none;
+  flex-direction: row;
+  gap: 20px;
+  margin-top: 30px;
+}
+
+.gift-box.open + .gift-content {
+  display: flex;
+  animation: fadeIn 2s forwards;
+}
+
+.gift-content img {
+  width: 200px;
+  height: 200px;
+  border-radius: 15px;
+  box-shadow: 0 0 15px #fff;
+  object-fit: cover;
+}
+</style>
+</head>
+<body>
+
+<h1>🎉 Happy Birthday Diya 💖</h1>
+
+<div class="slideshow">
+  <div class="slide active"><img src="1.jpg" alt="1"></div>
+  <div class="slide"><img src="2.jpg" alt="2"></div>
+  <div class="slide"><img src="3.jpg" alt="3"></div>
+  <div class="slide"><img src="4.jpg" alt="4"></div>
+  <div class="slide"><img src="5.jpg" alt="5"></div>
+  <div class="slide"><img src="6.jpg" alt="6"></div>
+  <div class="slide"><img src="7.jpg" alt="7"></div>
+  <div class="slide"><img src="8.jpg" alt="8"></div>
+  <div class="slide"><img src="9.jpg" alt="9"></div>
+  <div class="slide"><img src="10.jpg" alt="10"></div>
+  <div class="slide"><img src="11.jpg" alt="11"></div>
+  <div class="slide"><img src="12.jpg" alt="12"></div>
+  <div class="slide"><img src="13.jpg" alt="13"></div>
+  <div class="slide"><img src="14.jpg" alt="14"></div>
+  <div class="slide"><img src="15.jpg" alt="15"></div>
+  <div class="slide"><img src="16.jpg" alt="16"></div>
+  <div class="slide"><img src="17.jpg" alt="17"></div>
+  <div class="slide"><img src="18.jpg" alt="18"></div>
+  <div class="slide"><img src="19.jpg" alt="19"></div>
+  <div class="slide"><img src="20.jpg" alt="20"></div>
+  <div class="slide"><img src="21.jpg" alt="21"></div>
+  <div class="slide"><img src="22.jpg" alt="22"></div>
+  <div class="slide"><img src="23.jpg" alt="23"></div>
+  <div class="slide"><img src="24.jpg" alt="24"></div>
+  <div class="slide"><img src="25.jpg" alt="25"></div>
+  <div class="slide"><img src="26.jpg" alt="26"></div>
+  <div class="slide"><img src="27.jpg" alt="27"></div>
+  <div class="slide"><img src="28.jpg" alt="28"></div>
+  <div class="slide"><img src="29.jpg" alt="29"></div>
+  <div class="slide"><img src="30.jpg" alt="30"></div>
+  <div class="slide"><img src="31.jpg" alt="31"></div>
+  <div class="slide"><img src="32.jpg" alt="32"></div>
+  <div class="slide"><img src="33.jpg" alt="33"></div>
+  <div class="slide"><img src="34.jpg" alt="34"></div>
+  <div class="slide"><img src="35.jpg" alt="35"></div>
+  <div class="slide"><img src="36.jpg" alt="36"></div>
+</div>
+
+<div class="hearts"></div>
+
+<audio id="bgMusic" loop>
+  <source src="dj.mp3" type="audio/mpeg">
+  Your browser does not support the audio element.
+</audio>
+<button id="playBtn">🎵 Play Music</button>
+
+<div class="message">Happy Birthday, Diya 💖
+
+Today marks the day the world received someone truly special — you. From 5 November 2002 until this very moment, you’ve lived for around 201,896 hours, or 726,826,800 seconds — each one proof that someone so kind, beautiful, and rare was meant to exist.
+
+Diya, I care for you more than I can ever put into words. You’re not just a thought in my day — you’re the feeling that makes every moment better. I admire the way you smile, the way your presence brings calm, and the way everything around you feels lighter when you’re there.
+
+You’ve unknowingly become a part of my world in a way I can’t imagine replacing. I don’t love you for a reason — I love you because you make sense of all the reasons I never understood before.
+
+If I could, I’d spend every one of those 726 million seconds just making sure you’re happy — because seeing you smile feels like home to me.
+
+You’re more than someone I like — you’re someone I genuinely care for with my whole heart.
+Happy Birthday, Diya — I wish you endless joy, love, and every little thing that makes your heart shine. 💖🎂✨ ❤️</div>
+
+<!-- Gift Button -->
+<div class="gift-btn" id="giftBtn">🎁</div>
+
+<!-- Gift Modal -->
+<div class="gift-modal" id="giftModal">
+  <div class="gift-box" id="giftBox">
+    <div class="gift-lid"></div>
+  </div>
+  <div class="gift-content">
+    <img src="photos/gift_photo1.jpg" alt="Gift Photo 1">
+    <img src="photos/gift_photo2.jpg" alt="Gift Photo 2">
+  </div>
+</div>
+
+<canvas id="fireworksCanvas"></canvas>
+
+<script>
+// Music
+const music = document.getElementById('bgMusic');
+const btn = document.getElementById('playBtn');
+btn.addEventListener('click', () => {
+  music.play();
+  btn.style.display = 'none';
+});
+
+// Slideshow
+const slides = document.querySelectorAll(".slide");
+let current = 0;
+function nextSlide() {
+  slides[current].classList.remove("active");
+  current = (current + 1) % slides.length;
+  slides[current].classList.add("active");
+}
+setInterval(nextSlide, 10000);
+
+// Hearts
+const heartsContainer = document.querySelector('.hearts');
+setInterval(() => {
+  const heart = document.createElement('div');
+  heart.classList.add('heart');
+  heart.textContent = '💖';
+  heart.style.left = Math.random() * 100 + 'vw';
+  heart.style.fontSize = Math.random() * 30 + 10 + 'px';
+  heartsContainer.appendChild(heart);
+  setTimeout(() => heart.remove(), 6000);
+}, 300);
+
+// Falling effects
+function createFalling(type){
+  const elem = document.createElement('div');
+  elem.classList.add(type);
+  elem.style.left = Math.random()*100+'vw';
+  if(type==='bubble'){
+    const size = Math.random()*15+10;
+    elem.style.width = size+'px';
+    elem.style.height = size+'px';
+  } else if(type==='star'){
+    elem.textContent='✨';
+  } else if(type==='snowflake'){
+    elem.textContent='❄';
+  } else if(type==='petal'){
+    elem.textContent='🌹';
+  } else if(type==='letter'){
+    const letters = "HAPPY BIRTHDAY".split('');
+    elem.textContent = letters[Math.floor(Math.random()*letters.length)];
+    elem.style.color = `hsl(${Math.random()*360}, 100%, 70%)`;
+  }
+  elem.style.animation=`fall ${Math.random()*5+5}s linear forwards`;
+  document.body.appendChild(elem);
+  setTimeout(()=>elem.remove(),12000);
+}
+const styleSheet = document.createElement("style");
+styleSheet.innerHTML = `
+@keyframes fall {0%{transform:translateY(0);opacity:0;}50%{opacity:1;}100%{transform:translateY(110vh);opacity:1;}}`;
+document.head.appendChild(styleSheet);
+setInterval(()=>createFalling('snowflake'),200);
+setInterval(()=>createFalling('star'),300);
+setInterval(()=>createFalling('bubble'),400);
+setInterval(()=>createFalling('petal'),500);
+setInterval(()=>createFalling('letter'),600);
+
+// Fireworks
+const canvas = document.getElementById('fireworksCanvas');
+const ctx = canvas.getContext('2d');
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
+class FireworkParticle {
+  constructor(x,y,color){
+    this.x=x;this.y=y;this.color=color;
+    this.radius=Math.random()*2+1;
+    this.speedX=(Math.random()-0.5)*6;
+    this.speedY=(Math.random()-0.5)*6;
+    this.alpha=1;
+    this.decay=Math.random()*0.02+0.01;
+  }
+  update(){this.x+=this.speedX;this.y+=this.speedY;this.alpha-=this.decay;}
+  draw(){ctx.globalAlpha=this.alpha;ctx.beginPath();ctx.arc(this.x,this.y,this.radius,0,Math.PI*2);ctx.fillStyle=this.color;ctx.fill();ctx.globalAlpha=1;}
+}
+let particles=[];
+function launchFirework(){
+  const shots=Math.floor(Math.random()*4+3);
+  for(let s=0;s<shots;s++){
+    const x=Math.random()*canvas.width;
+    const y=Math.random()*canvas.height/2;
+    const colors=['#ff3cac','#ffe300','#00ffea','#ff66b2','#ff9933','#66ff66'];
+    const color=colors[Math.floor(Math.random()*colors.length)];
+    for(let i=0;i<50;i++){particles.push(new FireworkParticle(x,y,color));}
+  }
+}
+function animateFireworks(){
+  ctx.clearRect(0,0,canvas.width,canvas.height);
+  for(let i=particles.length-1;i>=0;i--){
+    const p=particles[i];p.update();p.draw();
+    if(p.alpha<=0){particles.splice(i,1);}
+  }
+  requestAnimationFrame(animateFireworks);
+}
+animateFireworks();
+setInterval(launchFirework,1200);
+window.addEventListener('resize',()=>{canvas.width=window.innerWidth;canvas.height=window.innerHeight;});
+
+// Gift button logic
+const giftBtn=document.getElementById('giftBtn');
+const giftModal=document.getElementById('giftModal');
+const giftBox=document.getElementById('giftBox');
+
+giftBtn.addEventListener('click',()=>{
+  giftModal.classList.add('active');
+});
+giftBox.addEventListener('click',()=>{
+  giftBox.classList.toggle('open');
+});
+giftModal.addEventListener('click',(e)=>{
+  if(e.target===giftModal){giftModal.classList.remove('active');giftBox.classList.remove('open');}
+});
+</script>
+</body>
+</html>
